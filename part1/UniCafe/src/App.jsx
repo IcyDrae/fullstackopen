@@ -1,16 +1,28 @@
 import { useState } from "react"
 
-const Statistics = (props) => {
+const Statistics = ({good, neutral, bad}) => {
+  const total = good + neutral + bad
+  const average = total === 0 ? 0 : (good - bad) / total;
+  const positive = total === 0 ? 0 : (good / total) * 100
+
+  if (total === 0) {
+    return (
+      <p>
+           No feedback given
+      </p>
+    )
+  }
+
   return (
     <>
       <h1>statistics</h1>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
+      <p>good {good}</p>
+      <p>neutral {neutral}</p>
+      <p>bad {bad}</p>
 
-      <p>all { props.good + props.neutral + props.bad }</p>
-      <p>average { props.average }</p>
-      <p>positive { props.positive }</p>
+      <p>all { good + neutral + bad }</p>
+      <p>average { average }</p>
+      <p>positive { positive }</p>
     </>
 
   )
@@ -33,10 +45,6 @@ function App() {
     setBad(bad + 1);
   }
 
-  const total = good + neutral + bad
-  const average = total === 0 ? 0 : (good - bad) / total;
-  const positive = total === 0 ? 0 : (good / total) * 100
-
   return (
     <>
       <h1>give feedback</h1>
@@ -44,7 +52,7 @@ function App() {
       <button onClick={setNeutralHandler}>neutral</button>
       <button onClick={setBadHandler}>bad</button>
 
-      <Statistics good={good} neutral={neutral} bad={bad} average={average} positive={positive}  />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </>
   )
 }
