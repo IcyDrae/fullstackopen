@@ -19,8 +19,16 @@ function App() {
     for (let i = 0; i < persons.length; i++) {
       let person = persons[i];
 
-      if (newName === person.name) {
+      if (newNumber !== person.number) {
+        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+          console.log(newNumber);
+          request.changeNumber(person.name, person.id, newNumber);
+        }
+
+        return;
+      } else if (newName === person.name) {
         alert(`${newName} is already added to phonebook`);
+
         return;
       }
     }
