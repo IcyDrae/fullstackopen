@@ -24,6 +24,16 @@
       "id": "8f0e",
       "name": "asd",
       "number": "asd"
+    },
+    {
+      "id": "240b",
+      "name": "Reard Gjoni",
+      "number": "12831283"
+    },
+    {
+      "id": "e7ff",
+      "name": "Hello world",
+      "number": "123"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
