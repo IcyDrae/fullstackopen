@@ -14,7 +14,7 @@ function App() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     for (let i = 0; i < persons.length; i++) {
       let person = persons[i];
@@ -26,10 +26,14 @@ function App() {
     }
 
     const noteObject = {
-      id: persons.length + 1,
       name: newName,
-      phone: newNumber
+      number: newNumber
     }
+
+    const response = axios.post("http://localhost:3001/persons", noteObject);
+    response.then((data) => {
+      console.log(data);
+    });
 
     setPersons(persons.concat(noteObject))
     setNewName('');
