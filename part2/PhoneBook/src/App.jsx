@@ -59,6 +59,14 @@ function App() {
     });
   }, []);
 
+  const deletePerson = (id, name) => {
+    if (window.confirm("Delete " + name + " ?")) {
+      request.deletePerson(id).then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      });
+    }
+  };
+
   return (
     <>
     <div>
@@ -70,7 +78,7 @@ function App() {
         newNumber={newNumber}
         handleNumberChange={handleNumberChange}
       />
-      <Persons personsToShow={personsToShow}/>
+      <Persons personsToShow={personsToShow} onDeleteHandle={deletePerson}/>
     </div>
     </>
   )

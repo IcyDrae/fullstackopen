@@ -1,4 +1,4 @@
-function Persons({personsToShow}) {
+function Persons({personsToShow, onDeleteHandle}) {
   return (
     <>
       <h2>Numbers</h2>
@@ -6,6 +6,7 @@ function Persons({personsToShow}) {
         return (
           <div key={person.id}>
             {person.name} {person.number}
+            <button onClick={() => onDeleteHandle(person.id, person.name)}>Delete</button>
           </div>
         )
       })}
