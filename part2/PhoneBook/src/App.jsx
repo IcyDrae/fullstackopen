@@ -2,7 +2,9 @@ import { useState, useEffect } from "react"
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
+import Notification from "./components/Notification";
 import request from "./modules/request";
+import "./index.css";
 
 function App() {
   const [persons, setPersons] = useState([]);
@@ -21,11 +23,8 @@ function App() {
 
       if (newNumber !== person.number) {
         if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
-          console.log(newNumber);
           request.changeNumber(person.name, person.id, newNumber);
         }
-
-        return;
       } else if (newName === person.name) {
         alert(`${newName} is already added to phonebook`);
 
@@ -40,6 +39,11 @@ function App() {
 
     request.createNew(noteObject).then(response => {
       setPersons(persons.concat(response.data));
+      setMessage(`Added ${response.data.name}`);
+
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     });
 
     setNewName('');
@@ -75,9 +79,12 @@ function App() {
     }
   };
 
+  const [message, setMessage] = useState(null);
+
   return (
     <>
     <div>
+      <Notification message={message} />
       <Filter result={result} handleResult={handleResult}/>
       <PersonForm
         handleSubmit={handleSubmit}
