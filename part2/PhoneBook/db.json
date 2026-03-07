@@ -21,19 +21,9 @@
       "id": "4"
     },
     {
-      "name": "Reard Gjoni",
-      "number": "",
-      "id": "240b"
-    },
-    {
       "name": "Arto Hellas",
       "number": "",
       "id": "0ecf"
-    },
-    {
-      "id": "f7d6",
-      "name": "asdasd",
-      "number": ""
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
