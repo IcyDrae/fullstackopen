@@ -7,7 +7,7 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
 
-const notes = [
+const people = [
   {
     "id": "1",
     "name": "Arto Hellas", 
@@ -31,7 +31,16 @@ const notes = [
 ];
 
 app.get('/api/persons', (request, response) => {
-  response.json(notes);
+  response.json(people);
+});
+
+app.get('/api/info', (request, response) => {
+  const date = new Date();
+  response.send(`
+  <p>Phonebook has info for ${people.length} people.</p>
+  <p>${date}</p>
+  `
+  );
 });
 
 const PORT = 3001;
