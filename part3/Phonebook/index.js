@@ -68,6 +68,20 @@ app.post('/api/persons', (request, response) => {
     });
   };
 
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "The name or the number are missing."
+    });
+  };
+
+  const nameExists = people.some(person => person.name === body.name);
+
+  if (nameExists) {
+    return response.status(400).json({
+      error: "Name must be unique."
+    });
+  }
+
   const person = {
     id: generateId(),
     name: body.name,
