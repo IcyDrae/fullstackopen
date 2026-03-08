@@ -34,11 +34,23 @@ app.get('/api/persons', (request, response) => {
   response.json(people);
 });
 
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  const person = people.find(person => person.id === id);
+
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
+});
+
 app.get('/api/info', (request, response) => {
   const date = new Date();
+
   response.send(`
-  <p>Phonebook has info for ${people.length} people.</p>
-  <p>${date}</p>
+    <p>Phonebook has info for ${people.length} people.</p>
+    <p>${date}</p>
   `
   );
 });
