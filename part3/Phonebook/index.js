@@ -7,7 +7,7 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
 
-const people = [
+let people = [
   {
     "id": "1",
     "name": "Arto Hellas", 
@@ -43,6 +43,13 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
     response.status(404).end();
   }
+});
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  people = people.filter(person => person.id === id);
+
+  response.status(204).end();
 });
 
 app.get('/api/info', (request, response) => {
