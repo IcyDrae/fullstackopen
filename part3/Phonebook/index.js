@@ -25,23 +25,23 @@ app.get('/api/persons', (request, response) => {
   });
 });
 
-// app.get('/api/persons/:id', (request, response) => {
-//   const id = request.params.id;
-//   const person = people.find(person => person.id === id);
+app.get('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  const person = people.find(person => person.id === id);
 
-//   if (person) {
-//     response.json(person);
-//   } else {
-//     response.status(404).end();
-//   }
-// });
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
+});
 
-// app.delete('/api/persons/:id', (request, response) => {
-//   const id = request.params.id;
-//   people = people.filter(person => person.id === id);
+app.delete('/api/persons/:id', (request, response) => {
+  const id = request.params.id;
+  people = people.filter(person => person.id === id);
 
-//   response.status(204).end();
-// });
+  response.status(204).end();
+});
 
 const generateId = () => {
   const maxId = people.length > 0
@@ -50,49 +50,40 @@ const generateId = () => {
   return String(maxId + 1)
 };
 
-// app.post('/api/persons', (request, response) => {
-//   const body = request.body;
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
 
-//   if (!body) {
-//     return response.status(400).json({
-//       error: "Content is missing"
-//     });
-//   };
+  if (!body) {
+    return response.status(400).json({
+      error: "Content is missing"
+    });
+  };
 
-//   if (!body.name || !body.number) {
-//     return response.status(400).json({
-//       error: "The name or the number are missing."
-//     });
-//   };
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "The name or the number are missing."
+    });
+  };
 
-//   const nameExists = people.some(person => person.name === body.name);
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
 
-//   if (nameExists) {
-//     return response.status(400).json({
-//       error: "Name must be unique."
-//     });
-//   }
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
+});
 
-//   const person = {
-//     id: generateId(),
-//     name: body.name,
-//     number: body.number
-//   };
+app.get('/api/info', (request, response) => {
+  const date = new Date();
 
-//   people = people.concat(person);
-
-//   response.json(person);
-// });
-
-// app.get('/api/info', (request, response) => {
-//   const date = new Date();
-
-//   response.send(`
-//     <p>Phonebook has info for ${people.length} people.</p>
-//     <p>${date}</p>
-//   `
-//   );
-// });
+  response.send(`
+    <p>Phonebook has info for ${people.length} people.</p>
+    <p>${date}</p>
+  `
+  );
+});
 
 const PORT = 3001;
 app.listen(PORT, () => {
