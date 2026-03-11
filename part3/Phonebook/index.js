@@ -37,10 +37,10 @@ app.get('/api/persons/:id', (request, response) => {
 });
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = request.params.id;
-  people = people.filter(person => person.id === id);
-
-  response.status(204).end();
+  Person.findByIdAndDelete(request.params.id)
+    .then(result => {
+      response.status(204).end();
+    });
 });
 
 const generateId = () => {
@@ -68,11 +68,11 @@ app.post('/api/persons', (request, response) => {
   const person = new Person({
     name: body.name,
     number: body.number
-  })
+  });
 
   person.save().then(savedPerson => {
     response.json(savedPerson)
-  })
+  });
 });
 
 app.get('/api/info', (request, response) => {
