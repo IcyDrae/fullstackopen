@@ -40,7 +40,8 @@ app.delete('/api/persons/:id', (request, response) => {
   Person.findByIdAndDelete(request.params.id)
     .then(result => {
       response.status(204).end();
-    });
+    })
+    .catch(error => next(error));
 });
 
 const generateId = () => {
@@ -84,6 +85,23 @@ app.get('/api/info', (request, response) => {
   `
   );
 });
+
+// Middleware for error handling
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === 'CastError') {
+    return response.status(400).json({ error: 'malformatted id' })
+  }
+
+  if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
+
+  next(error);
+};
+
+app.use(errorHandler);
 
 const PORT = 3001;
 app.listen(PORT, () => {
