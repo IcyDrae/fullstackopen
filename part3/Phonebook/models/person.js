@@ -12,7 +12,12 @@ mongoose.connect(url, { family: 4 })
   })
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)
-  })
+  });
+
+const phoneValidator = function(number) {
+  const phoneRegex = /^\d{2,3}-\d+$/
+  return phoneRegex.test(number);
+};
 
 const personSchema = new mongoose.Schema({
   name: {
@@ -20,8 +25,16 @@ const personSchema = new mongoose.Schema({
     minLength: 3,
     required: true
   },
-  number: String
-})
+  number: {
+    type: String,
+    minLength: 8,
+    required: true,
+    validate: {
+      validator: phoneValidator,
+      message: props => `${props.value} is not a valid phone number`
+    }
+  }
+});
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
@@ -29,7 +42,7 @@ personSchema.set('toJSON', {
     delete returnedObject._id
     delete returnedObject.__v
   }
-})
+});
 
-module.exports = mongoose.model('Person', personSchema)
+module.exports = mongoose.model('Person', personSchema);
 
