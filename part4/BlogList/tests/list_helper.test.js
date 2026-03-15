@@ -89,6 +89,22 @@ describe('most blogs', () => {
       blogs: 3
     })
   })
+});
 
-})
+describe('most likes', () => {
+  const blogs = [
+    { title: "a", author: "Edsger W. Dijkstra", likes: 5 },
+    { title: "b", author: "Edsger W. Dijkstra", likes: 12 },
+    { title: "c", author: "Robert C. Martin", likes: 10 },
+    { title: "d", author: "Robert C. Martin", likes: 3 }
+  ]
 
+  test('author with most total likes', () => {
+    const result = listHelper.mostLikes(blogs)
+
+    assert.deepStrictEqual(result, {
+      author: "Edsger W. Dijkstra",
+      likes: 17
+    })
+  })
+});
