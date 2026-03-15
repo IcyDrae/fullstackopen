@@ -39,3 +39,35 @@ describe('total likes', () => {
   })
 });
 
+describe('favorite blog', () => {
+  const blogs = [
+    {
+      _id: "1",
+      title: "React patterns",
+      author: "Michael Chan",
+      url: "https://reactpatterns.com/",
+      likes: 7
+    },
+    {
+      _id: "2",
+      title: "Go To Statement Considered Harmful",
+      author: "Edsger W. Dijkstra",
+      url: "http://example.com",
+      likes: 5
+    },
+    {
+      _id: "3",
+      title: "Canonical string reduction",
+      author: "Edsger W. Dijkstra",
+      url: "http://example.com",
+      likes: 12
+    }
+  ]
+
+  test('returns the blog with most likes', () => {
+    const result = listHelper.favoriteBlog(blogs)
+
+    assert.deepStrictEqual(result, blogs[2])
+  })
+});
+
